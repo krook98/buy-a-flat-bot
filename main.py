@@ -32,18 +32,21 @@ for link in all_links_elements:
     else:
         all_links.append(href)
 
-print(all_links)
-all_prices_elements = soup.find_all(class_='css-1bq5zfe es62z2j16')
-all_prices = []
-for price in all_prices_elements:
-    price = price.getText()
-    price = unidecode.unidecode(price)
-    all_prices.append(price)
-print(all_prices)
+all_items_elements = soup.select(selector='#__next > div.css-1i02l4.ee6kzq26 > main > div > div.css-172356e.ee6kzq23 > '
+                                          'div.css-7fb6fe.e76enq87 > div.css-1sxg93g.e76enq86 > div.css-1dcvyuj.e76enq80 '
+                                          '> div > ul li p ')
 
-# all_prices_elements = all_prices_elements[1].getText()
-# all_prices = []
-# for price in all_prices_elements:
-#     all_prices.append(price)
-#
-# print(all_prices)
+all_titles = []
+all_prices = []
+
+for item in all_items_elements:
+    item = item.getText()
+    if 'Warszawa' in item:
+        all_titles.append(item)
+    if 'zł' in item:
+        item = unidecode.unidecode(item)
+        all_prices.append(item)
+
+print(all_links)
+print(all_prices)
+print(all_titles)
